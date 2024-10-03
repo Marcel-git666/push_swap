@@ -6,14 +6,16 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 16:13:24 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/03 16:15:45 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/03 16:37:01 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	main(void)
+int	main(int argc, char **argv)
 {
-	ft_printf("Test\n");
+	if (argc == 1)
+		return (0);
+	
 	return (0);
 }
