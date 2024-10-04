@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 19:01:00 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/04 19:39:44 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/04 21:33:43 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_node	*create_node(int value)
 
 t_stack	*create_stack(void)
 {
-	t_stack *stack;
+	t_stack	*stack;
 
 	stack = (t_stack *)malloc(sizeof(t_stack));
 	if (!stack)
@@ -76,4 +76,18 @@ void	print_stack(t_stack *stack)
 	}
 }
 
+void	free_stack(t_stack *stack)
+{
+	t_node	*current;
+	t_node	*next;
+
+	current = stack->top;
+	while (current)
+	{
+		next = current->next;
+		free(current);
+		current = next;
+	}
+	free(stack);
+}
 
