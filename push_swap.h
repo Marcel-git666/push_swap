@@ -1,28 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/19 13:28:20 by mmravec           #+#    #+#             */
-/*   Updated: 2024/09/26 12:23:21 by mmravec          ###   ########.fr       */
+/*   Created: 2024/10/04 18:30:22 by mmravec           #+#    #+#             */
+/*   Updated: 2024/10/04 19:40:52 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
-
-# include <unistd.h>
+#ifndef PUSH_SWAP_H
+# define PUSH_SWAP_H
 # include <stdlib.h>
-# include <stdarg.h>
+# include <unistd.h>
+# include <stddef.h>
 
-int	ft_printf(const char *format, ...);
-int	print_format(char conversion, va_list *ap);
-int	print_char(int c);
-int	print_string(char *s);
-int	print_digit(long n, int base, char *symbols);
-int	print_unsigned_digit(unsigned long long n, int base, char *symbols);
-int	print_pointer(void *p);
+typedef struct s_node
+{
+	int				value;
+	struct s_node	*next;
+	struct s_node	*prev;
+}		t_node;
+
+
+typedef struct s_stack
+{
+	t_node	*top;
+	t_node	*bottom;
+	int		size;
+}		t_stack;
+
+t_node	*create_node(int value);
+t_stack	*create_stack(void);
+void	push_bottom(t_stack *stack_a, t_node *new_node);
+void	print_stack(t_stack *stack);
 
 #endif

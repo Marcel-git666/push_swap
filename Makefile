@@ -6,29 +6,36 @@
 #    By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/03 16:05:35 by mmravec           #+#    #+#              #
-#    Updated: 2024/10/03 16:08:11 by mmravec          ###   ########.fr        #
+#    Updated: 2024/10/04 19:03:32 by mmravec          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = push_swap
-CC = cc
+CC = gcc-14
 CFLAGS = -Wall -Werror -Wextra
 
 # Source files for the server
-SRCS = push_swap.c ft_printf.c ft_printf_utils.c
+SRCS = push_swap.c utils.c
 OBJS = $(SRCS:.c=.o)
 
-# Default target to build everything (both server and client)
-all: $(NAME)
+# Path to the libft directory
+LIBFT_DIR = libft
+LIBFT = $(LIBFT_DIR)/libft.a
 
 # Rule to build the final server executable
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
+$(NAME): $(LIBFT) $(OBJS)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -L$(LIBFT_DIR) -lft
+
+# Rule to build libft by calling its Makefile
+$(LIBFT):
+	$(MAKE) -C $(LIBFT_DIR)
 
 # Rule to compile .c files into .o files
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
+# Default target to build everything (both server and client)
+all: $(NAME)
 
 # Clean up object files
 clean:
