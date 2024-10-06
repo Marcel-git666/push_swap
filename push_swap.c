@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 16:13:24 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/04 21:43:59 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/06 15:38:49 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,9 @@ int	main(int argc, char **argv)
 	{
 		fill_stack_from_args(stack_a, argv + 1);
 	}
+	print_stack(stack_a);
+	print_stack(stack_b);
+	bubble_sort(stack_a, stack_b);
 	print_stack(stack_a);
 	print_stack(stack_b);
 	free_stack(stack_a);

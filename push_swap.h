@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 18:30:22 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/05 17:14:14 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/06 16:34:20 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,11 @@ void	swap_both(t_stack *stack_a, t_stack *stack_b);
 void	push_top(t_stack *stack, t_node *new_node);
 void	push_a(t_stack *stack_a, t_stack *stack_b);
 void	push_b(t_stack *stack_b, t_stack *stack_a);
+void	rotate_a(t_stack *stack);
+void	rotate_b(t_stack *stack);
+void	rotate_both(t_stack *stack_a, t_stack *stack_b);
+void	rev_rotate_a(t_stack *stack);
+void	rev_rotate_b(t_stack *stack);
+void	rev_rotate_both(t_stack *stack_a, t_stack *stack_b);
+void	bubble_sort(t_stack *stack_a, t_stack *stack_b);
 #endif
