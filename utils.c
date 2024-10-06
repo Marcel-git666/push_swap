@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 19:01:00 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/04 21:33:43 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/05 16:46:16 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,22 +39,40 @@ t_stack	*create_stack(void)
 	return (stack);
 }
 
-void	push_bottom(t_stack *stack_a, t_node *new_node)
+void	push_bottom(t_stack *stack, t_node *new_node)
 {
 	if (!new_node)
 		return ;
-	if (stack_a->size == 0)
+	if (stack->size == 0)
 	{
-		stack_a->top = new_node;
-		stack_a->bottom = new_node;
+		stack->top = new_node;
+		stack->bottom = new_node;
 	}
 	else
 	{
-		new_node->prev = stack_a->bottom;
-		stack_a->bottom->next = new_node;
-		stack_a->bottom = new_node;
+		new_node->prev = stack->bottom;
+		stack->bottom->next = new_node;
+		stack->bottom = new_node;
 	}
-	stack_a->size++;
+	stack->size++;
+}
+
+void	push_top(t_stack *stack, t_node *new_node)
+{
+	if (!new_node)
+		return ;
+	if (stack->size == 0)
+	{
+		stack->top = new_node;
+		stack->bottom = new_node;
+	}
+	else
+	{
+		new_node->next = stack->top;
+		stack->top->prev = new_node;
+		stack->top = new_node;
+	}
+	stack->size++;
 }
 
 void	print_stack(t_stack *stack)

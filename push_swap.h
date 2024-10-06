@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 18:30:22 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/04 21:33:25 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/05 17:14:14 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,10 @@ t_stack	*create_stack(void);
 void	push_bottom(t_stack *stack_a, t_node *new_node);
 void	print_stack(t_stack *stack);
 void	free_stack(t_stack *stack);
-
+void	swap_a(t_stack *stack_a);
+void	swap_b(t_stack *stack_b);
+void	swap_both(t_stack *stack_a, t_stack *stack_b);
+void	push_top(t_stack *stack, t_node *new_node);
+void	push_a(t_stack *stack_a, t_stack *stack_b);
+void	push_b(t_stack *stack_b, t_stack *stack_a);
 #endif
