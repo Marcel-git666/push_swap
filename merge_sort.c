@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 13:29:02 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/08 21:55:34 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/08 22:11:08 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,41 +47,43 @@ int find_max_value(t_stack *stack)
     return max_value;
 }
 
-
-void sort_two_elements_b(t_stack *stack_b)
+void	sort_two_elements_b(t_stack *stack_b)
 {
-    if (stack_b->top->value > stack_b->top->next->value)
-        swap_b(stack_b);  // Swap if the first element is greater than the second
+	if (stack_b->top->value > stack_b->top->next->value)
+		swap_b(stack_b);
 }
-void sort_three_elements(t_stack *stack)
-{
-    int top = stack->top->value;
-    int middle = stack->top->next->value;
-    int bottom = stack->bottom->value;
 
-    if (top > middle && middle < bottom && top < bottom) {
-        // Case where top > middle < bottom, but top < bottom
-        swap_a(stack);
-    }
-    else if (top > middle && middle > bottom) {
-        // Case where top > middle > bottom (reverse sorted)
-        swap_a(stack);
-        rev_rotate_a(stack);
-    }
-    else if (top > middle && middle < bottom && top > bottom) {
-        // Case where top > middle < bottom, and top > bottom
-        rotate_a(stack);
-    }
-    else if (top < middle && middle > bottom && top < bottom) {
-        // Case where top < middle > bottom, but top < bottom
-        swap_a(stack);
-        rotate_a(stack);
-    }
-    else if (top < middle && middle > bottom && top > bottom) {
-        // Case where top < middle > bottom and top > bottom
-        rev_rotate_a(stack);
-    }
-    // If the stack is already sorted, do nothing.
+void	sort_two_elements(t_stack *stack)
+{
+	if (stack->top->value > stack->top->next->value)
+		swap_a(stack);
+}
+
+void	sort_three_elements(t_stack *stack)
+{
+	int		top;
+	int		middle;
+	int		bottom;
+
+	top = stack->top->value;
+	middle = stack->top->next->value;
+	bottom = stack->bottom->value;
+	if (top > middle && middle < bottom && top < bottom)
+		swap_a(stack);
+	else if (top > middle && middle > bottom)
+	{
+		swap_a(stack);
+		rev_rotate_a(stack);
+	}
+	else if (top > middle && middle < bottom && top > bottom)
+		rotate_a(stack);
+	else if (top < middle && middle > bottom && top < bottom)
+	{
+		swap_a(stack);
+		rotate_a(stack);
+	}
+	else if (top < middle && middle > bottom && top > bottom)
+		rev_rotate_a(stack);
 }
 
 void sort_three_elements_b(t_stack *stack_b)
@@ -113,6 +115,7 @@ void sort_three_elements_b(t_stack *stack_b)
         swap_b(stack_b);
     }
 }
+
 void push_smallest_to_b(t_stack *stack_a, t_stack *stack_b)
 {
     t_node *current = stack_a->top;
@@ -204,15 +207,15 @@ void move_chunk_to_b(t_stack *stack_a, t_stack *stack_b, int min_val, int max_va
 void handle_five_elements(t_stack *stack_a, t_stack *stack_b)
 {
     // Push the smallest two elements to stack_b
-    push_smallest_to_b(stack_a, stack_b);  // Push one smallest
-    push_smallest_to_b(stack_a, stack_b);  // Push another smallest
+	push_smallest_to_b(stack_a, stack_b);  // Push one smallest
+	push_smallest_to_b(stack_a, stack_b);  // Push another smallest
 
     // Sort the remaining 3 elements in stack_a
-    sort_three_elements(stack_a);
+	sort_three_elements(stack_a);
 
     // Push back the two elements from stack_b
-    push_a(stack_a, stack_b);
-    push_a(stack_a, stack_b);
+	push_a(stack_a, stack_b);
+	push_a(stack_a, stack_b);
 }
 void push_max_to_a(t_stack *stack_a, t_stack *stack_b)
 {
@@ -261,33 +264,47 @@ void sort_large_stack(t_stack *stack_a, t_stack *stack_b)
     int total_size = stack_a->size;
     int chunk_count;
 
-    // Determine the number of chunks based on the size of stack_a
+    // Dynamically determine chunk count based on the size of stack_a
     if (total_size <= 150)
     {
-        chunk_count = 5;  // Use 5 chunks for stacks of size between 50 and 150
+        chunk_count = 5;  // For smaller stacks, split into 5 chunks
     }
     else
     {
-        chunk_count = 12;  // Use 12 chunks for stacks larger than 150
+        chunk_count = 12;  // For larger stacks, split into 12 chunks
     }
 
     int min_value = find_min_value(stack_a);
     int max_value = find_max_value(stack_a);
 
-    // Create chunks based on the calculated chunk_count
+    // Process each chunk
     for (int i = 0; i < chunk_count; i++)
     {
         int lower_bound = min_value + i * (max_value - min_value) / chunk_count;
         int upper_bound = min_value + (i + 1) * (max_value - min_value) / chunk_count;
+
+        // Move elements in this range to stack_b
         move_chunk_to_b(stack_a, stack_b, lower_bound, upper_bound);
+
+        // For small remaining stacks in stack_a, use optimized sorting
+        if (stack_a->size <= 5)
+        {
+            if (stack_a->size == 2)
+                sort_two_elements(stack_a);
+            else if (stack_a->size == 3)
+                sort_three_elements(stack_a);
+            else if (stack_a->size == 5)
+                handle_five_elements(stack_a, stack_b);
+        }
     }
 
-    // After all chunks are pushed to stack_b, merge them back into stack_a
+    // Push elements back from stack_b to stack_a in sorted order
     while (stack_b->size > 0)
     {
-        push_max_to_a(stack_a, stack_b);  // Push values from stack_b in decreasing order
+        push_max_to_a(stack_a, stack_b);
     }
 }
+
 
 
 int cmp(t_node *a, t_node *b)
@@ -344,14 +361,6 @@ void	merge(t_stack *stack_a, t_stack *stack_b)
 }
 
 
-void sort_two_elements(t_stack *stack)
-{
-	if (stack->size == 2 && stack->top->value > stack->top->next->value)
-	{
-		swap_a(stack); // Assuming swap_a swaps the top two elements of stack_a
-	}
-}
-
 int is_sorted(t_stack *stack)
 {
 	t_node *current;
@@ -389,21 +398,20 @@ t_stack *merge_sort(t_stack *stack_a, t_stack *stack_b)
 		return (stack_a);
 	}
 	if (stack_a->size == 3)
-    {
-        sort_three_elements(stack_a);
-        return stack_a;
-    }
+	{
+		sort_three_elements(stack_a);
+		return (stack_a);
+	}
 	if (stack_a->size == 5)
 	{
 		handle_five_elements(stack_a, stack_b);
 		return (stack_a);
 	}
 	if (stack_a->size >= 50)
-    {
-        sort_large_stack(stack_a, stack_b);
-        return stack_a;
-    }
-
+	{
+		sort_large_stack(stack_a, stack_b);
+		return (stack_a);
+	}
 	if (stack_a->size <= 1 || is_sorted(stack_a))
 	{
 		// ft_printf("Base case reached, returning stack:\n");
