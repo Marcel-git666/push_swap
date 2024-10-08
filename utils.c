@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 19:01:00 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/05 16:46:16 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/07 19:22:37 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,15 @@ void	push_top(t_stack *stack, t_node *new_node)
 		stack->top->prev = new_node;
 		stack->top = new_node;
 	}
-	stack->size++;
+	// stack->size++;
 }
 
 void	print_stack(t_stack *stack)
 {
 	t_node	*current;
+	int		i;
 
+	i = 0;
 	current = stack->top;
 	if (stack->size == 0)
 	{
@@ -89,8 +91,9 @@ void	print_stack(t_stack *stack)
 	ft_printf("Stack (top to bottom):\n");
 	while (current)
 	{
-		ft_printf("%d\n", current->value);
+		ft_printf("[%d]: %d\n", i, current->value);
 		current = current->next;
+		i++;
 	}
 }
 

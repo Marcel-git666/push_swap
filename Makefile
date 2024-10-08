@@ -6,7 +6,7 @@
 #    By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/03 16:05:35 by mmravec           #+#    #+#              #
-#    Updated: 2024/10/06 15:42:01 by mmravec          ###   ########.fr        #
+#    Updated: 2024/10/07 16:24:17 by mmravec          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ CFLAGS = -Wall -Werror -Wextra
 
 # Source files for the server
 SRCS = push_swap.c utils.c stack_swap_operations.c stack_push_operations.c \
-		stack_rotate_operations.c stack_rev_rotate_operations.c bubble_sort.c
+		stack_rotate_operations.c stack_rev_rotate_operations.c bubble_sort.c \
+		merge_sort.c quicksort.c
 OBJS = $(SRCS:.c=.o)
 
 # Path to the libft directory

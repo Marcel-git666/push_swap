@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 16:38:52 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/05 17:13:51 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/07 17:44:49 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,34 +18,55 @@ void	swap(t_stack *stack)
 	t_node	*first;
 	t_node	*second;
 
-	if (stack->size < 2)
-		return ;
 	first = stack->top;
 	second = first->next;
+	if (second == stack->bottom)
+		stack->bottom = first;
 	if (second->next != NULL)
 		second->next->prev = first;
-	second->prev = NULL;
+	first->next = second->next;
 	second->next = first;
+	second->prev = NULL;
 	first->prev = second;
 	stack->top = second;
 }
 
-void	swap_a(t_stack *stack_a)
+void	swap_a(t_stack *stack)
 {
-	swap(stack_a);
-	ft_printf("sa\n");
+	if (stack->size >= 2)
+	{
+		swap(stack);
+		ft_printf("sa\n");
+	}
 }
 
-void	swap_b(t_stack *stack_b)
+void	swap_b(t_stack *stack)
 {
-	swap(stack_b);
-	ft_printf("sb\n");
+	if (stack->size >= 2)
+	{
+		swap(stack);
+		ft_printf("sb\n");
+	}
 }
 
 void	swap_both(t_stack *stack_a, t_stack *stack_b)
 {
-	swap(stack_a);
-	swap(stack_b);
-	ft_printf("ss\n");
+	int		swapped_a;
+	int		swapped_b;
+
+	swapped_a = 0;
+	swapped_b = 0;
+	if (stack_a->size >= 2)
+	{
+		swap(stack_a);
+		swapped_a = 1;
+	}
+	if (stack_b->size >= 2)
+	{
+		swap(stack_b);
+		swapped_b = 1;
+	}
+	if (swapped_a || swapped_b)
+		ft_printf("ss\n");
 }
 

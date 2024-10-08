@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 14:51:43 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/06 15:50:25 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/07 17:27:07 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,6 @@ void	rotate(t_stack *stack)
 {
 	t_node	*temp;
 
-	temp = NULL;
-	if (stack->size == 2)
-	{
-		stack->bottom = stack->top;
-		stack->top = temp;
-		stack->top->next = stack->bottom;
-		stack->top->prev = NULL;
-		stack->bottom->next = NULL;
-		stack->bottom->prev = stack->top;
-		return ;
-	}
 	temp = stack->top;
 	stack->top = temp->next;
 	stack->top->prev = NULL;
@@ -39,23 +28,39 @@ void	rotate(t_stack *stack)
 
 void	rotate_a(t_stack *stack)
 {
-	if (stack->size < 2)
-		return ;
-	rotate(stack);
-	ft_printf("ra\n");
+	if (stack->size >= 2)
+	{
+		rotate(stack);
+		ft_printf("ra\n");
+	}
 }
 
 void	rotate_b(t_stack *stack)
 {
-	if (stack->size < 2)
-		return ;
-	rotate(stack);
-	ft_printf("rb\n");
+	if (stack->size >= 2)
+	{
+		rotate(stack);
+		ft_printf("rb\n");
+	}
 }
 
 void	rotate_both(t_stack *stack_a, t_stack *stack_b)
 {
-	rotate(stack_a);
-	rotate(stack_b);
-	ft_printf("rr\n");
+	int		rotated_a;
+	int		rotated_b;
+
+	rotated_a = 0;
+	rotated_b = 0;
+	if (stack_a->size >= 2)
+	{
+		rotate(stack_a);
+		rotated_a = 1;
+	}
+	if (stack_b->size >= 2)
+	{
+		rotate(stack_b);
+		rotated_b = 1;
+	}
+	if (rotated_a || rotated_b)
+		ft_printf("rr\n");
 }
