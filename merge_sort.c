@@ -6,49 +6,53 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 13:29:02 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/08 16:30:47 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/08 21:55:34 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include "libft/libft.h"
 
+int find_min_value(t_stack *stack)
+{
+    t_node *current = stack->top;
+    int min_value = current->value;
+
+    while (current != NULL)
+    {
+        if (current->value < min_value)
+        {
+            min_value = current->value;
+        }
+        current = current->next;
+    }
+
+    return min_value;
+}
+
+int find_max_value(t_stack *stack)
+{
+    t_node *current = stack->top;
+    int max_value = current->value;
+
+    while (current != NULL)
+    {
+        if (current->value > max_value)
+        {
+            max_value = current->value;
+        }
+        current = current->next;
+    }
+
+    return max_value;
+}
+
+
 void sort_two_elements_b(t_stack *stack_b)
 {
     if (stack_b->top->value > stack_b->top->next->value)
         swap_b(stack_b);  // Swap if the first element is greater than the second
 }
-
-void sort_three_elements_b(t_stack *stack_b)
-{
-    int first = stack_b->top->value;
-    int second = stack_b->top->next->value;
-    int third = stack_b->top->next->next->value;
-
-    if (first > second && second > third)
-    {
-        swap_b(stack_b);
-        rev_rotate_b(stack_b);
-    }
-    else if (first > third && third > second)
-    {
-        rotate_b(stack_b);
-    }
-    else if (second > third && third > first)
-    {
-        swap_b(stack_b);
-        rotate_b(stack_b);
-    }
-    else if (second > first && first > third)
-    {
-        rev_rotate_b(stack_b);
-    }
-    else if (third > first && first > second)
-    {
-        swap_b(stack_b);
-    }
-}
-
 void sort_three_elements(t_stack *stack)
 {
     int top = stack->top->value;
@@ -80,6 +84,212 @@ void sort_three_elements(t_stack *stack)
     // If the stack is already sorted, do nothing.
 }
 
+void sort_three_elements_b(t_stack *stack_b)
+{
+    int first = stack_b->top->value;
+    int second = stack_b->top->next->value;
+    int third = stack_b->top->next->next->value;
+
+    if (first > second && second > third)
+    {
+        swap_b(stack_b);
+        rev_rotate_b(stack_b);
+    }
+    else if (first > third && third > second)
+    {
+        rotate_b(stack_b);
+    }
+    else if (second > third && third > first)
+    {
+        swap_b(stack_b);
+        rotate_b(stack_b);
+    }
+    else if (second > first && first > third)
+    {
+        rev_rotate_b(stack_b);
+    }
+    else if (third > first && first > second)
+    {
+        swap_b(stack_b);
+    }
+}
+void push_smallest_to_b(t_stack *stack_a, t_stack *stack_b)
+{
+    t_node *current = stack_a->top;
+    t_node *smallest = current;
+    int position = 0;
+    int smallest_position = 0;
+
+    // Find the smallest element in stack_a
+    while (current != NULL)
+    {
+        if (current->value < smallest->value)
+        {
+            smallest = current;
+            smallest_position = position;
+        }
+        position++;
+        current = current->next;
+    }
+
+    // Rotate to bring the smallest to the top
+    if (smallest_position <= stack_a->size / 2)
+    {
+        while (smallest_position > 0)
+        {
+            rotate_a(stack_a);
+            smallest_position--;
+        }
+    }
+    else
+    {
+        while (smallest_position < stack_a->size)
+        {
+            rev_rotate_a(stack_a);
+            smallest_position++;
+        }
+    }
+
+    // Push the smallest element to stack_b
+    push_b(stack_b, stack_a);
+}
+void move_chunk_to_b(t_stack *stack_a, t_stack *stack_b, int min_val, int max_val)
+{
+    t_node *current;
+    int position, chunk_position;
+    int rotations;
+
+    // Loop until no more elements in the chunk
+    while (1)
+    {
+        current = stack_a->top;
+        position = 0;
+        chunk_position = -1;
+
+        // Find the position of the first element in the chunk
+        while (current)
+        {
+            if (current->value >= min_val && current->value <= max_val)
+            {
+                chunk_position = position;
+                break;
+            }
+            position++;
+            current = current->next;
+        }
+
+        // No more elements in the chunk
+        if (chunk_position == -1)
+            break;
+
+        // Rotate to bring the chunk element to the top efficiently
+        rotations = chunk_position;
+        if (chunk_position <= stack_a->size / 2)
+        {
+            while (rotations-- > 0)
+                rotate_a(stack_a);
+        }
+        else
+        {
+            rotations = stack_a->size - chunk_position;
+            while (rotations-- > 0)
+                rev_rotate_a(stack_a);
+        }
+
+        // Push the element from stack_a to stack_b
+        push_b(stack_b, stack_a);
+    }
+}
+
+void handle_five_elements(t_stack *stack_a, t_stack *stack_b)
+{
+    // Push the smallest two elements to stack_b
+    push_smallest_to_b(stack_a, stack_b);  // Push one smallest
+    push_smallest_to_b(stack_a, stack_b);  // Push another smallest
+
+    // Sort the remaining 3 elements in stack_a
+    sort_three_elements(stack_a);
+
+    // Push back the two elements from stack_b
+    push_a(stack_a, stack_b);
+    push_a(stack_a, stack_b);
+}
+void push_max_to_a(t_stack *stack_a, t_stack *stack_b)
+{
+    t_node *current = stack_b->top;
+    t_node *largest = current;
+    int position = 0;
+    int largest_position = 0;
+
+    // Find the largest element in stack_b
+    while (current != NULL)
+    {
+        if (current->value > largest->value)
+        {
+            largest = current;
+            largest_position = position;
+        }
+        position++;
+        current = current->next;
+    }
+
+    // Rotate to bring the largest to the top
+    if (largest_position <= stack_b->size / 2)
+    {
+        while (largest_position > 0)
+        {
+            rotate_b(stack_b);
+            largest_position--;
+        }
+    }
+    else
+    {
+        while (largest_position < stack_b->size)
+        {
+            rev_rotate_b(stack_b);
+            largest_position++;
+        }
+    }
+
+    // Push the largest element to stack_a
+    push_a(stack_a, stack_b);
+}
+
+
+void sort_large_stack(t_stack *stack_a, t_stack *stack_b)
+{
+    int total_size = stack_a->size;
+    int chunk_count;
+
+    // Determine the number of chunks based on the size of stack_a
+    if (total_size <= 150)
+    {
+        chunk_count = 5;  // Use 5 chunks for stacks of size between 50 and 150
+    }
+    else
+    {
+        chunk_count = 12;  // Use 12 chunks for stacks larger than 150
+    }
+
+    int min_value = find_min_value(stack_a);
+    int max_value = find_max_value(stack_a);
+
+    // Create chunks based on the calculated chunk_count
+    for (int i = 0; i < chunk_count; i++)
+    {
+        int lower_bound = min_value + i * (max_value - min_value) / chunk_count;
+        int upper_bound = min_value + (i + 1) * (max_value - min_value) / chunk_count;
+        move_chunk_to_b(stack_a, stack_b, lower_bound, upper_bound);
+    }
+
+    // After all chunks are pushed to stack_b, merge them back into stack_a
+    while (stack_b->size > 0)
+    {
+        push_max_to_a(stack_a, stack_b);  // Push values from stack_b in decreasing order
+    }
+}
+
+
 int cmp(t_node *a, t_node *b)
 {
 	if (a == NULL || b == NULL)
@@ -91,44 +301,35 @@ int cmp(t_node *a, t_node *b)
 	return (0);
 }
 
-void merge(t_stack *stack_a, t_stack *stack_b)
+void	merge(t_stack *stack_a, t_stack *stack_b)
 {
-	int rotations = 0;
+	int		rotations;
 
+	rotations = 0;
 	if (stack_b->size == 2)
-    {
-        sort_two_elements_b(stack_b); // This function will sort stack_b with 2 elements
-    }
-    else if (stack_b->size == 3)
-    {
-        sort_three_elements_b(stack_b); // This function will sort stack_b with 3 elements
-    }
+		sort_two_elements_b(stack_b);
+	else if (stack_b->size == 3)
+		sort_three_elements_b(stack_b);
 	while (stack_b->size > 0)
 	{
-		// ft_printf("Comparing A: %d, B: %d\n", stack_a->top->value, stack_b->top->value);
 		if (cmp(stack_b->top, stack_a->top) < 0)
 		{
-			// ft_printf("Pushing from B to A: %d\n", stack_b->top->value);
 			push_a(stack_a, stack_b);
 			while (rotations > 0)
 			{
-				// ft_printf("Reversing rotation: A: %d\n", stack_a->top->value);
 				rev_rotate_a(stack_a);
 				rotations--;
 			}
 		}
 		else
 		{
-			// ft_printf("Rotating A: %d\n", stack_a->top->value);
 			rotate_a(stack_a);
 			rotations++;
 			if (rotations == stack_a->size)
 			{
-				// ft_printf("Pushing from B to A after full rotation: %d\n", stack_b->top->value);
 				push_a(stack_a, stack_b);
 				while (rotations > 0)
 				{
-					// ft_printf("Reversing rotation after push: A: %d\n", stack_a->top->value);
 					rev_rotate_a(stack_a);
 					rotations--;
 				}
@@ -137,11 +338,11 @@ void merge(t_stack *stack_a, t_stack *stack_b)
 	}
 	while (rotations > 0)
 	{
-		// ft_printf("Final reverse rotation: A: %d\n", stack_a->top->value);
 		rev_rotate_a(stack_a);
 		rotations--;
 	}
 }
+
 
 void sort_two_elements(t_stack *stack)
 {
@@ -192,6 +393,17 @@ t_stack *merge_sort(t_stack *stack_a, t_stack *stack_b)
         sort_three_elements(stack_a);
         return stack_a;
     }
+	if (stack_a->size == 5)
+	{
+		handle_five_elements(stack_a, stack_b);
+		return (stack_a);
+	}
+	if (stack_a->size >= 50)
+    {
+        sort_large_stack(stack_a, stack_b);
+        return stack_a;
+    }
+
 	if (stack_a->size <= 1 || is_sorted(stack_a))
 	{
 		// ft_printf("Base case reached, returning stack:\n");
