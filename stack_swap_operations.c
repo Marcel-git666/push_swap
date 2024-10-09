@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 16:38:52 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/07 17:44:49 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/09 20:26:02 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,3 @@ void	swap_both(t_stack *stack_a, t_stack *stack_b)
 	if (swapped_a || swapped_b)
 		ft_printf("ss\n");
 }
-

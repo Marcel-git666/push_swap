@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 19:01:00 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/07 19:22:37 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/09 20:25:24 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,29 +72,6 @@ void	push_top(t_stack *stack, t_node *new_node)
 		stack->top->prev = new_node;
 		stack->top = new_node;
 	}
-	// stack->size++;
-}
-
-void	print_stack(t_stack *stack)
-{
-	t_node	*current;
-	int		i;
-
-	i = 0;
-	current = stack->top;
-	if (stack->size == 0)
-	{
-		ft_printf("Stack is empty.\n");
-		return ;
-	}
-
-	ft_printf("Stack (top to bottom):\n");
-	while (current)
-	{
-		ft_printf("[%d]: %d\n", i, current->value);
-		current = current->next;
-		i++;
-	}
 }
 
 void	free_stack(t_stack *stack)
@@ -112,3 +89,24 @@ void	free_stack(t_stack *stack)
 	free(stack);
 }
 
+// void	print_stack(t_stack *stack)
+// {
+// 	t_node	*current;
+// 	int		i;
+
+// 	i = 0;
+// 	current = stack->top;
+// 	if (stack->size == 0)
+// 	{
+// 		ft_printf("Stack is empty.\n");
+// 		return ;
+// 	}
+
+// 	ft_printf("Stack (top to bottom):\n");
+// 	while (current)
+// 	{
+// 		ft_printf("[%d]: %d\n", i, current->value);
+// 		current = current->next;
+// 		i++;
+// 	}
+// }

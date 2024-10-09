@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:23:18 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/08 09:51:07 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/09 19:27:49 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,10 @@ void quicksort_push_swap(t_stack *stack_a, t_stack *stack_b)
 		}
 		i++;
 	}
-	ft_printf("Stack A after partition:\n");
-	print_stack(stack_a);
-	ft_printf("Stack B after partition:\n");
-	print_stack(stack_b);
+	// ft_printf("Stack A after partition:\n");
+	// print_stack(stack_a);
+	// ft_printf("Stack B after partition:\n");
+	// print_stack(stack_b);
 	// // Pause to allow for debugging
     // ft_printf("Press Enter to continue...\n");
     // getchar();  // Wait for Enter key to continue
@@ -94,7 +94,7 @@ void quicksort_push_swap(t_stack *stack_a, t_stack *stack_b)
 		push_a(stack_a, stack_b);
 	}
 	ft_printf("Final Stack A:\n");
-	print_stack(stack_a);
+	// print_stack(stack_a);
 	ft_printf("Final Stack B:\n");
-	print_stack(stack_b);
+	// print_stack(stack_b);
 }

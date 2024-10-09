@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 16:47:17 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/08 09:40:41 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/09 20:27:00 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,3 @@ void	push_b(t_stack *stack_b, t_stack *stack_a)
 	stack_b->size++;
 	ft_printf("pb\n");
 }
-

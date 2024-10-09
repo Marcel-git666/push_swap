@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 18:30:22 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/08 09:51:28 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/09 20:25:10 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ typedef struct s_node
 	struct s_node	*next;
 	struct s_node	*prev;
 }		t_node;
-
 
 typedef struct s_stack
 {
@@ -52,5 +51,31 @@ void	bubble_sort(t_stack *stack_a);
 t_stack	*merge_sort(t_stack *stack_a, t_stack *stack_b);
 void	quicksort_push_swap(t_stack *stack_a, t_stack *stack_b);
 int		is_sorted(t_stack *stack);
+
+void	push_smallest_to_b(t_stack *stack_a, t_stack *stack_b);
+int		find_min_value(t_stack *stack);
+int		find_max_value(t_stack *stack);
+void	sort_two_elements_b(t_stack *stack_b);
+void	sort_two_elements(t_stack *stack);
+void	sort_three_elements(t_stack *stack);
+void	sort_four_elements(t_stack *stack_a, t_stack *stack_b);
+void	sort_five_elements(t_stack *stack_a, t_stack *stack_b);
+int		find_smallest_position(t_stack *stack_a, int smallest_value);
+void	rotate_to_position(t_stack *stack_a, int position);
+int		find_chunk_position(t_stack *stack_a, int min_val, int max_val);
+void	move_chunk_to_b(t_stack *stack_a, t_stack *stack_b, int min_val,
+			int max_val);
+int		find_largest_position(t_stack *stack_b, t_node **largest);
+void	push_max_to_a(t_stack *stack_a, t_stack *stack_b);
+void	process_chunks(t_stack *stack_a, t_stack *stack_b, int chunk_count);
+void	sort_small_stack(t_stack *stack_a, t_stack *stack_b);
+void	sort_large_stack(t_stack *stack_a, t_stack *stack_b);
+int		cmp(t_node *a, t_node *b);
+void	reverse_rotations(t_stack *stack_a, int *rotations);
+void	handle_rotations(t_stack *stack_a, t_stack *stack_b, int *rotations);
+void	merge(t_stack *stack_a, t_stack *stack_b);
+int		is_sorted(t_stack *stack);
+void	split(t_stack *stack_a, t_stack *stack_b);
+t_stack	*merge_sort(t_stack *stack_a, t_stack *stack_b);
 
 #endif
