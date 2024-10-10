@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 18:30:22 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/09 20:25:10 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/10 08:06:58 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stddef.h>
+
+# define I_MIN -2147483648
+# define I_MAX 2147483647
 
 typedef struct s_node
 {

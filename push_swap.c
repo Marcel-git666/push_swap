@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 16:13:24 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/10 07:28:08 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/10 08:01:36 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,23 @@ int	search_duplicate(t_stack *stack, int value)
 int	fill_stack_from_args(t_stack *stack, char **args)
 {
 	t_node	*new_node;
-// Error Handling for Invalid Input
-// Duplicate Detection
+	int		value;
+	int		error;
 
 	while (*args)
 	{
-		new_node = create_node(ft_atoi(*args));
+		value = ft_atoi_safe(*args, &error);
+		if (error)
+			return (ft_putstr_fd("Error\n", 2), 0);
+		if (search_duplicate(stack, value))
+			return (ft_putstr_fd("Error\n", 2), 0);
+		new_node = create_node(value);
 		if (!new_node)
 			return (0);
 		push_bottom(stack, new_node);
 		args++;
 	}
+	return (1);
 }
 
 int	main(int argc, char **argv)
@@ -56,13 +62,27 @@ int	main(int argc, char **argv)
 	if (argc == 2)
 	{
 		split_args = ft_split(argv[1], ' ');
-		fill_stack_from_args(stack_a, split_args);
+		if (!split_args)
+			return (1);
+		if (!fill_stack_from_args(stack_a, split_args))
+		{
+			while (*split_args)
+				free(*split_args++);
+			free_stack(stack_a);
+			free_stack(stack_b);
+			return (1);
+		}
 		while (*split_args)
 			free(*split_args++);
 	}
 	else
 	{
-		fill_stack_from_args(stack_a, argv + 1);
+		if (!fill_stack_from_args(stack_a, argv + 1))
+		{
+			free_stack(stack_a);
+			free_stack(stack_b);
+			return (1);
+		}
 	}
 	merge_sort(stack_a, stack_b);
 	free_stack(stack_a);
