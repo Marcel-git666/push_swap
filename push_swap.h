@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 18:30:22 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/10 08:06:58 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/10 08:12:10 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	bubble_sort(t_stack *stack_a);
 t_stack	*merge_sort(t_stack *stack_a, t_stack *stack_b);
 void	quicksort_push_swap(t_stack *stack_a, t_stack *stack_b);
 int		is_sorted(t_stack *stack);
+int		ft_atoi_safe(const char *str, int *error);
 
 void	push_smallest_to_b(t_stack *stack_a, t_stack *stack_b);
 int		find_min_value(t_stack *stack);
