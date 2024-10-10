@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 16:13:24 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/10 12:44:08 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/10 14:59:12 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,10 @@ int	main(int argc, char **argv)
 	t_stack	*stack_a;
 	t_stack	*stack_b;
 
-	stack_a = create_stack();
-	stack_b = create_stack();
 	if (argc == 1)
 		return (0);
+	stack_a = create_stack();
+	stack_b = create_stack();
 	if ((argc == 2 && !handle_split_args(stack_a, argv))
 		|| (argc > 2 && !fill_stack_from_args(stack_a, argv + 1)))
 		return (free_stack(stack_a), free_stack(stack_b), 1);
