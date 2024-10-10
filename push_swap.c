@@ -6,14 +6,28 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 16:13:24 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/09 20:26:21 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/10 07:28:08 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include "libft/libft.h"
 
-void	fill_stack_from_args(t_stack *stack, char **args)
+int	search_duplicate(t_stack *stack, int value)
+{
+	t_node	*current;
+
+	current = stack->top;
+	while (current != NULL )
+	{
+		if (value == current->value)
+			return (1);
+		current = current->next;
+	}
+	return (0);
+}
+
+int	fill_stack_from_args(t_stack *stack, char **args)
 {
 	t_node	*new_node;
 // Error Handling for Invalid Input
@@ -22,6 +36,8 @@ void	fill_stack_from_args(t_stack *stack, char **args)
 	while (*args)
 	{
 		new_node = create_node(ft_atoi(*args));
+		if (!new_node)
+			return (0);
 		push_bottom(stack, new_node);
 		args++;
 	}
