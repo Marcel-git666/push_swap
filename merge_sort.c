@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 13:29:02 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/09 18:59:47 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/10 11:37:40 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int	is_sorted(t_stack *stack)
 
 t_stack	*merge_sort(t_stack *stack_a, t_stack *stack_b)
 {
+	if (is_sorted(stack_a))
+		return (stack_a);
 	if (stack_a->size <= 5)
 	{
 		sort_small_stack(stack_a, stack_b);

@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 16:13:24 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/10 08:01:36 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/10 12:44:08 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,41 +49,41 @@ int	fill_stack_from_args(t_stack *stack, char **args)
 	return (1);
 }
 
+int	handle_split_args(t_stack *stack_a, char **argv)
+{
+	char	**split_args;
+	char	**tmp;
+
+	split_args = ft_split(argv[1], ' ');
+	if (!split_args)
+		return (0);
+	if (!fill_stack_from_args(stack_a, split_args))
+	{
+		tmp = split_args;
+		while (*tmp)
+			free(*tmp++);
+		free(split_args);
+		return (0);
+	}
+	tmp = split_args;
+	while (*tmp)
+		free(*tmp++);
+	free(split_args);
+	return (1);
+}
+
 int	main(int argc, char **argv)
 {
 	t_stack	*stack_a;
 	t_stack	*stack_b;
-	char	**split_args;
 
 	stack_a = create_stack();
 	stack_b = create_stack();
 	if (argc == 1)
 		return (0);
-	if (argc == 2)
-	{
-		split_args = ft_split(argv[1], ' ');
-		if (!split_args)
-			return (1);
-		if (!fill_stack_from_args(stack_a, split_args))
-		{
-			while (*split_args)
-				free(*split_args++);
-			free_stack(stack_a);
-			free_stack(stack_b);
-			return (1);
-		}
-		while (*split_args)
-			free(*split_args++);
-	}
-	else
-	{
-		if (!fill_stack_from_args(stack_a, argv + 1))
-		{
-			free_stack(stack_a);
-			free_stack(stack_b);
-			return (1);
-		}
-	}
+	if ((argc == 2 && !handle_split_args(stack_a, argv))
+		|| (argc > 2 && !fill_stack_from_args(stack_a, argv + 1)))
+		return (free_stack(stack_a), free_stack(stack_b), 1);
 	merge_sort(stack_a, stack_b);
 	free_stack(stack_a);
 	free_stack(stack_b);

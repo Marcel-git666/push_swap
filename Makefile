@@ -6,12 +6,12 @@
 #    By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/03 16:05:35 by mmravec           #+#    #+#              #
-#    Updated: 2024/10/10 08:07:38 by mmravec          ###   ########.fr        #
+#    Updated: 2024/10/10 11:28:36 by mmravec          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = push_swap
-CC = gcc-14
+CC = cc
 CFLAGS = -Wall -Werror -Wextra
 
 # Source files for the server

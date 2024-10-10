@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 07:49:01 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/10 08:06:51 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/10 12:41:35 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int	ft_atoi_safe(const char *str, int *error)
 	while (*str >= '0' && *str <= '9')
 	{
 		result = result * 10 + (*str - '0');
-		if ((result * positive) > I_MAX ||
-			(result * positive) < I_MIN)
+		if ((result * positive) > I_MAX
+			|| (result * positive) < I_MIN)
 			return (*error = 1, 0);
 		str++;
 	}
